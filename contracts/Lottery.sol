@@ -15,7 +15,6 @@ contract Lottery is Ownable {
     }
     LOTTERY_STATE public lottery_state;
 
-
     constructor(address _priceFeedAddress) public {
         usdEntryFee = 50 * (10**18);
         ethUsdPriceFeed = AggregatorV3Interface(_priceFeedAddress);
@@ -38,14 +37,22 @@ contract Lottery is Ownable {
 
     function startLottery() public onlyOwner {
         require(
-            lottery_state ==LOTTERY_STATE.CLOSED,
+            lottery_state == LOTTERY_STATE.CLOSED,
             "Can't start a new lottery yet!"
         );
         lottery_state = LOTTERY_STATE.OPEN;
     }
 
-
     function endLottery() public onlyOwner {
-        
+        uint256(
+            keccack256(
+                abi.encodePacked(
+                    nonce,
+                    msg.sender,
+                    block.difficulty,
+                    block.timestamp
+                )
+            )
+        ) % players.length;
     }
 }
