@@ -7,7 +7,7 @@ import "@chainlink/contracts/src/v0.6/VRFConsumerBase.sol";
 
 contract Lottery is VRFConsumerBase, Ownable {
     address payable[] public players;
-    address public recentwinner;
+    address payable public recentWinner;
     uint256 public randomness;
     uint256 public usdEntryFee;
     AggregatorV3Interface internal ethUsdPriceFeed;
@@ -72,7 +72,7 @@ contract Lottery is VRFConsumerBase, Ownable {
         require(_randomness > 0, "random-not-fund");
         uint256 indexOfWinner = _randomness % players.length;
         recentWinner = players[indexOfWinner];
-        recentWinner.tranfer(address(this).balance);
+        recentWinner.transfer(address(this).balance);
         // Reset
         players = new address payable[](0);
         lottery_state = LOTTERY_STATE.CLOSED;
