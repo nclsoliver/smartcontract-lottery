@@ -20,7 +20,8 @@ def get_account(index=None, id=None):
     return accounts.add(config["wallets"]["from_fey"])
 
 
-contract_to_mock = {"eth_usd_price_feed": MockV3Aggregator}
+contract_to_mock = {"eth_usd_price_feed": MockV3Aggregator,
+'vrf_coordinator': }
 
 
 def get_contract(contract_name):
@@ -57,7 +58,6 @@ INITIAL_VALUE = 200000000000
 
 def deploymocks(decimals=DECIMALS, initial_value=INITIAL_VALUE):
     account = get_account()
-    mock_price_feed = MockV3Aggregator.deploy(
-        decimals, initial_value, {"from": account}
+    MockV3Aggregator.deploy(decimals, initial_value, {"from": account}
     )
     print("Deployed!")
