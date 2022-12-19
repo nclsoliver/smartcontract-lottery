@@ -3,7 +3,7 @@ from scripts.deploy_lottery import deploy_lottery
 from web3 import Web3
 
 
-def test_get_entrace_fee():
+def test_get_entrance_fee():
     # Arrange
     lottery = deploy_lottery()
     # Act
