@@ -26,7 +26,7 @@ def get_account(index=None, id=None):
         or network.show_active() in FORKED_LOCAL_ENVIRONMENTS
     ):
         return accounts[0]
-    return accounts.add(config["wallets"]["from_fey"])
+    return accounts.add(config["wallets"]["from_key"])
 
 
 contract_to_mock = {
