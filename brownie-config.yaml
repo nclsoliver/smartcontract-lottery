@@ -21,6 +21,9 @@ networks:
         verify: True
     mainnet-fork:
         eth_usd_price_feed: '0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419'
+    live:
+        gas_limit: "1000000"
+
 wallets:
     from_keys: ${PRIVATE_KEY}
 

@@ -82,7 +82,7 @@ def deploy_mocks(decimals=DECIMALS, initial_value=INITIAL_VALUE):
 
 
 def fund_with_link(
-    contract_address, account=None, link_token=None, amount=50000000000000000000
+    contract_address, account=None, link_token=None, amount=5000000000000000000
 ):  # 0.1 Link
     account = account if account else get_account()
     link_token = link_token if link_token else get_contract("link_token")
