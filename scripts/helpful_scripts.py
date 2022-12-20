@@ -26,7 +26,7 @@ def get_account(index=None, id=None):
         or network.show_active() in FORKED_LOCAL_ENVIRONMENTS
     ):
         return accounts[0]
-    return accounts.add(config["wallets"]["from_key"])
+    return accounts.add(config["wallets"]["from_keys"])
 
 
 contract_to_mock = {
@@ -54,13 +54,18 @@ def get_contract(contract_name):
         contract = contract_type[-1]
         # MockV3Aggregator[-1]
     else:
-        contract_address = config["networks"][network.show_active()][contract_name]
-        # address
-        # ABI
-        contract = Contract.from_abi(
-            contract_type.name, contract_address, contract_type.abi
-        )
-        # MockV3Aggregator.abi
+        try:
+            contract_address = config["networks"][network.show_active()][contract_name]
+            contract = Contract.from_abi(
+                contract_type._name, contract_address, contract_type.abi
+            )
+        except KeyError:
+            print(
+                f"{network.show_active()} address not found, perhaps you should add it to the config or deploy mocks?"
+            )
+            print(
+                f"brownie run scripts/deploy_mocks.py --network {network.show_active()}"
+            )
     return contract
 
 
@@ -77,7 +82,7 @@ def deploy_mocks(decimals=DECIMALS, initial_value=INITIAL_VALUE):
 
 
 def fund_with_link(
-    contract_address, account=None, link_token=None, amount=5000000000000000000
+    contract_address, account=None, link_token=None, amount=50000000000000000000
 ):  # 0.1 Link
     account = account if account else get_account()
     link_token = link_token if link_token else get_contract("link_token")
